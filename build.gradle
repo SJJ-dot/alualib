@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 3
+        versionName "1.0.3"
+        externalNativeBuild {
+            cmake {
+                arguments '-DANDROID_STL=c++_static'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/jni/CMakeLists.txt')
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+publish {
+    userOrg = 'liangchenhe55'
+    groupId = 'cc.chenhe'
+    artifactId = 'android-lua'
+    publishVersion = '1.0.3'
+    desc = 'Use Lua in Android.'
+    website = 'https://github.com/liangchenhe55/Android-Lua'
+}
